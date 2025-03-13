@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .models import Student
 from .forms import StudentSignUpForm
+from apps.courses.models import Course
 
 
 def signup(request):
@@ -20,4 +21,6 @@ def signup(request):
 
 
 def home(request):
-    return render(request, 'students/home.html')
+    courses = Course.objects.all()
+
+    return render(request, 'students/home.html', {'courses': courses})
