@@ -7,4 +7,17 @@
 {% else %}
     <p>Please log in or sign up to continue.</p>
 {% endif %}
+
+<p>Here are some of the courses you can enroll in:</p>
+<ul>
+    {% for course in courses %}
+        <li>
+          <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+            <p>{{ course.description }}</p>
+            <small>Created on: {{ course.created_at|date:"F j, Y" }}</small>
+        </li>
+    {% empty %}
+        <li>No courses available at the moment.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'students/base.html' %}  <!-- Reuse the base template from your students app, or create a global base -->
+
+{% block content %}
+  <h2>Available Courses</h2>
+  <ul>
+    {% for course in courses %}
+      <li>
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+        <small>Created on: {{ course.created_at|date:"F j, Y" }}</small>
+      </li>
+    {% empty %}
+      <li>No courses available at the moment.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
