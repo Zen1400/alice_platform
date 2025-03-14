@@ -1,2 +1,19 @@
 .python-version
 .env
+# AWS CLI and SDK artifacts
+.aws/              # AWS CLI config folder
+*.aws              # Any file ending with .aws
+awscli/            # AWS CLI installation directory
+credentials        # AWS credentials file
+config             # AWS CLI config file
+*.log              # Log files (common in AWS tools)
+
+# Python/CPython compiled files
+__pycache__/       # Python bytecode cache
+*.py[cod]          # Compiled Python files (.pyc, .pyo, .pyd)
+*$py.class         # Jython compiled files
+
+# General development artifacts
+.env               # Environment variables
+.venv/             # Virtual environment
+.DS_Store          # macOS metadata
