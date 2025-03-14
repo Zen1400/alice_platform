@@ -17,3 +17,4 @@ __pycache__/       # Python bytecode cache
 .env               # Environment variables
 .venv/             # Virtual environment
 .DS_Store          # macOS metadata
+*__pycache__*
