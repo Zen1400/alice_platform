@@ -1,0 +1,13 @@
+<!-- courses/templates/courses/payment.html -->
+{% extends 'students/base.html' %}
+
+{% block content %}
+<h2>Purchase {{ course.title }}</h2>
+<p>Price: ${{ course.price }}</p>
+<!-- Payment form placeholder for Stripe integration -->
+<form method="POST">
+    {% csrf_token %}
+    <!-- Later add Stripe payment elements here -->
+    <button type="submit" class="cta-btn">Pay with Stripe</button>
+</form>
+{% endblock %}

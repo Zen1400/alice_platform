@@ -1,23 +1,32 @@
+<!-- apps/students/templates/students/home.html -->
 {% extends 'students/base.html' %}
 
 {% block content %}
-<h2>Welcome to the Learning Platform</h2>
-{% if user.is_authenticated %}
-    <p>You are logged in as {{ user.username }}.</p>
-{% else %}
-    <p>Please log in or sign up to continue.</p>
-{% endif %}
+    <!-- Hero Section to promote courses -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Unlock Your Potential in DevOps</h2>
+            <p>Join our expert-led courses to jumpstart your career. Learn hands-on skills that put you ahead of the curve!</p>
+            <!-- Use the namespace 'courses' and the view name 'course_list' -->
+            <a href="{% url 'courses:course_list' %}" class="cta-btn">Browse Courses</a>
+        </div>
+    </section>
 
-<p>Here are some of the courses you can enroll in:</p>
-<ul>
-    {% for course in courses %}
-        <li>
-          <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
-            <p>{{ course.description }}</p>
-            <small>Created on: {{ course.created_at|date:"F j, Y" }}</small>
-        </li>
-    {% empty %}
-        <li>No courses available at the moment.</li>
-    {% endfor %}
-</ul>
+    <!-- Courses Section as sample content -->
+    <section class="courses-list">
+        <h3>Featured Courses</h3>
+        <div class="course-cards">
+            {% for course in courses %}
+                <div class="course-card">
+                    <h4>{{ course.title }}</h4>
+                    <p>{{ course.description|truncatewords:15 }}</p>
+                    <p class="course-meta">Length: {{ course.length }} hours</p>
+                    <!-- Use the namespace 'courses' for the detail view -->
+                    <a href="{% url 'courses:course_detail' course.id %}" class="details-link">Learn More</a>
+                </div>
+            {% empty %}
+                <p>No courses available at the moment.</p>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

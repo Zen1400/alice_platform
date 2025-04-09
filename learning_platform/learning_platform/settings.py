@@ -74,6 +74,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'learning_platform.wsgi.application'
 
 
+LOGIN_REDIRECT_URL = 'home'
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -83,6 +85,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
@@ -136,25 +140,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ######################## AWS S3 Configuration ########################
 
-AWS_ACCESS_KEY_ID = os.environ.get('ACCESSKEY_S3')
-AWS_SECRET_ACCESS_KEY = os.environ.get('SECRETKEY_S3')
+# AWS_ACCESS_KEY_ID = os.environ.get('ACCESSKEY_S3')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('SECRETKEY_S3')
 
-AWS_STORAGE_BUCKET_NAME = 'learning-platform-django'
-AWS_CUSOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_STORAGE_BUCKET_NAME = 'learning-platform-django'
+# AWS_CUSOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# If a user uploads the same file name, it will not overwrite the previous file
-AWS_S3_FILE_OVERWRITE = False
+# # If a user uploads the same file name, it will not overwrite the previous file
+# AWS_S3_FILE_OVERWRITE = False
 
 
 
-STORAGES = {
+# STORAGES = {
 
-    # MEdia file storage (images)
-    'default': {
-        'BACKEND': 'storages.backends.s3boto3.S3StaticStorage',
-    },
+#     # MEdia file storage (images)
+#     'default': {
+#         'BACKEND': 'storages.backends.s3boto3.S3StaticStorage',
+#     },
 
-    "staticfiles": {
-        'BACKEND': 'storages.backends.s3boto3.S3StaticStorage',
-    }
-}
+#     "staticfiles": {
+#         'BACKEND': 'storages.backends.s3boto3.S3StaticStorage',
+#     }
+# }

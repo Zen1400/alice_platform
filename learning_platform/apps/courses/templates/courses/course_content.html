@@ -1,0 +1,15 @@
+<!-- courses/templates/courses/course_content.html -->
+{% extends 'students/base.html' %}
+
+{% block content %}
+<h2>{{ course.title }} - Course Content</h2>
+<div class="course-content">
+    {{ course.content|safe }}
+</div>
+{% if course.code_snippet %}
+<div>
+    <h3>Code Example:</h3>
+    <pre>{{ course.code_snippet }}</pre>
+</div>
+{% endif %}
+{% endblock %}

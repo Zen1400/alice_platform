@@ -1,30 +1,13 @@
-<!-- apps/courses/templates/courses/course_detail.html -->
+<!-- courses/templates/courses/course_detail.html -->
 {% extends 'students/base.html' %}
+
 {% block content %}
-  <h2>{{ course.title }}</h2>
-  <p>{{ course.description }}</p>
-
-  <!-- Display image if available -->
-  {% if course.image %}
-    <img src="{{ course.image.url }}" alt="{{ course.title }}" style="max-width:100%;">
-  {% endif %}
-
-  <!-- Display video if available -->
-  {% if course.video %}
-    <video controls style="max-width:100%;">
-      <source src="{{ course.video.url }}" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  {% endif %}
-
-  <!-- Display rich text content -->
-  <div class="course-content">
-    {{ course.content|safe }}
-  </div>
-
-  <!-- Display code snippet if available -->
-  {% if course.code_snippet %}
-    <h3>Example Code:</h3>
-    <pre style="background:#f4f4f4; padding:10px;">{{ course.code_snippet }}</pre>
-  {% endif %}
+<h2>{{ course.title }}</h2>
+<p>{{ course.description }}</p>
+<p>Price: ${{ course.price }}</p>
+{% if user.is_authenticated %}
+    <a href="{% url 'courses:purchase_course' course.id %}" class="cta-btn">Purchase this Course</a>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">log in</a> to purchase this course.</p>
+{% endif %}
 {% endblock %}
