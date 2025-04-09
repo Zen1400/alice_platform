@@ -1,22 +1,54 @@
-{% extends 'students/base.html' %}
+{% extends "students/base.html" %}
+{% load static %}
 
 {% block content %}
-    <section class="dashboard">
-        <h2>Your Dashboard</h2>
-        <p>Welcome back, {{ user.username }}!</p>
+<section class="dashboard">
+    <h2>Your Dashboard</h2>
+    <p>Welcome back, {{ user.username }}!</p>
+
+    <div class="dashboard-section">
         <h3>Enrolled Courses</h3>
-        <ul>
-            {% for enrollment in user.enrollments.all %}
-                <li>
-                    <a href="{% url 'course_detail' enrollment.course.id %}">
-                        {{ enrollment.course.title }}
-                    </a>
-                </li>
+        <div class="course-grid">
+            {% for enrollment in enrollments %}
+                <div class="course-card">
+                    {% if enrollment.course.image %}
+                        <img src="{{ enrollment.course.image.url }}" alt="{{ enrollment.course.title }}" class="course-image">
+                    {% else %}
+                        <!-- Fallback image -->
+                        <img src="{% static 'images/default_course.jpg' %}" alt="Default Course" class="course-image">
+                    {% endif %}
+                    <div class="course-info">
+                        <h4>{{ enrollment.course.title }}</h4>
+                        <p class="course-meta">Length: {{ enrollment.course.length }} hours</p>
+                        <a href="{% url 'courses:course_detail' enrollment.course.id %}" class="details-link">View Course</a>
+                    </div>
+                </div>
             {% empty %}
                 <p>You have not enrolled in any courses yet.</p>
             {% endfor %}
-        </ul>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
         <h3>Recommended Courses</h3>
-        <!-- You can add logic here for recommendations -->
-    </section>
+        <div class="course-grid">
+            {% for course in recommended_courses %}
+                <div class="course-card">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+                    {% else %}
+                        <img src="{% static 'images/default_course.jpg' %}" alt="Default Course" class="course-image">
+                    {% endif %}
+                    <div class="course-info">
+                        <h4>{{ course.title }}</h4>
+                        <p class="course-meta">Length: {{ course.length }} hours</p>
+                        <a href="{% url 'courses:course_detail' course.id %}" class="details-link">Learn More</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No recommended courses available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 {% endblock %}

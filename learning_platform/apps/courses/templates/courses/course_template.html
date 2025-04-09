@@ -1,0 +1,90 @@
+{% extends "students/base.html" %}
+{% load static %}
+{% load markdown %}  {# if you’re using a markdown filter library #}
+
+{% block content %}
+<div class="course-content-wrapper">
+  <!-- Left Sidebar: Automatically generated from section headings -->
+  <aside class="course-sidebar">
+    <h3>Course Outline</h3>
+    <ul id="course-toc">
+      <!-- Items will be inserted by JavaScript -->
+    </ul>
+  </aside>
+  
+  <!-- Main Content: Render the course content (Markdown to HTML) -->
+  <section class="course-main">
+    <div id="course-content">
+      {{ course.content|markdown }}
+    </div>
+    
+    <!-- Progress Section -->
+    <div class="progress-container">
+      <h4>Your Progress: <span id="progress-percentage">0%</span></h4>
+      <ul id="progress-list">
+        <!-- Checkboxes will be inserted by JavaScript -->
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- JavaScript to generate the sidebar and progress list -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Use all <h2> elements inside the course content as the section markers.
+  var sections = document.querySelectorAll("#course-content h2");
+  var toc = document.getElementById("course-toc");
+  var progressList = document.getElementById("progress-list");
+
+  sections.forEach(function(section, index) {
+    // Ensure each section has a unique id.
+    var sectionId = section.id;
+    if (!sectionId) {
+      sectionId = "section-" + index;
+      section.id = sectionId;
+    }
+    // Create a TOC item linking to the section.
+    var tocItem = document.createElement("li");
+    var tocLink = document.createElement("a");
+    tocLink.href = "#" + sectionId;
+    tocLink.textContent = section.textContent;
+    tocItem.appendChild(tocLink);
+    toc.appendChild(tocItem);
+
+    // Create a progress list item with a checkbox.
+    var progressItem = document.createElement("li");
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = "progress-" + sectionId;
+    // Restore state from localStorage.
+    if(localStorage.getItem("progress-" + sectionId) === "true"){
+      checkbox.checked = true;
+    }
+    checkbox.addEventListener("change", function() {
+      localStorage.setItem("progress-" + sectionId, checkbox.checked);
+      updateProgress();
+    });
+    var label = document.createElement("label");
+    label.htmlFor = checkbox.id;
+    label.textContent = section.textContent;
+    progressItem.appendChild(checkbox);
+    progressItem.appendChild(label);
+    progressList.appendChild(progressItem);
+  });
+
+  function updateProgress() {
+    var total = sections.length;
+    var completed = 0;
+    sections.forEach(function(section){
+      var secId = section.id;
+      if(document.getElementById("progress-" + secId).checked){
+        completed++;
+      }
+    });
+    var percentage = total ? Math.round((completed / total) * 100) : 0;
+    document.getElementById("progress-percentage").textContent = percentage + "%";
+  }
+  updateProgress();
+});
+</script>
+{% endblock %}

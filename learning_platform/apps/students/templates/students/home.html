@@ -1,32 +1,51 @@
-<!-- apps/students/templates/students/home.html -->
-{% extends 'students/base.html' %}
+{% extends "students/base.html" %}
+{% load static %}
 
 {% block content %}
-    <!-- Hero Section to promote courses -->
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Unlock Your Potential in DevOps</h2>
-            <p>Join our expert-led courses to jumpstart your career. Learn hands-on skills that put you ahead of the curve!</p>
-            <!-- Use the namespace 'courses' and the view name 'course_list' -->
-            <a href="{% url 'courses:course_list' %}" class="cta-btn">Browse Courses</a>
-        </div>
-    </section>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Learning Platform</h1>
+        <h2>Unlock Your Potential in Computer Science</h2>
+        <p>Learn cutting-edge skills with our expert-led courses. Start your journey towards a rewarding career today!</p>
+        <a href="{% url 'courses:course_list' %}" class="cta-btn">Browse Courses</a>
+    </div>
+</section>
 
-    <!-- Courses Section as sample content -->
-    <section class="courses-list">
-        <h3>Featured Courses</h3>
-        <div class="course-cards">
+<!-- Featured Courses Section -->
+<section class="featured-courses">
+    <div class="container">
+        <h2>Featured Courses</h2>
+        <div class="course-grid">
             {% for course in courses %}
                 <div class="course-card">
-                    <h4>{{ course.title }}</h4>
-                    <p>{{ course.description|truncatewords:15 }}</p>
-                    <p class="course-meta">Length: {{ course.length }} hours</p>
-                    <!-- Use the namespace 'courses' for the detail view -->
-                    <a href="{% url 'courses:course_detail' course.id %}" class="details-link">Learn More</a>
+                    <div class="card-image">
+                        {% if course.image %}
+                            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                        {% else %}
+                            <img src="{% static 'images/default_course.jpg' %}" alt="Default Course">
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h3>{{ course.title }}</h3>
+                        <p class="description">{{ course.description|truncatewords:15 }}</p>
+                        <p class="meta">Length: {{ course.length }} hours</p>
+                        <a href="{% url 'courses:course_detail' course.id %}" class="btn">Learn More</a>
+                    </div>
                 </div>
             {% empty %}
-                <p>No courses available at the moment.</p>
+                <p class="no-courses">No courses available at the moment.</p>
             {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- Additional Section (e.g., a Call-to-Action or Testimonials) -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to Start Your Learning Journey?</h2>
+        <p>Join thousands of learners and take control of your career. Our courses are designed to help you succeed.</p>
+        <a href="{% url 'signup' %}" class="cta-btn secondary">Sign Up Now</a>
+    </div>
+</section>
 {% endblock %}
