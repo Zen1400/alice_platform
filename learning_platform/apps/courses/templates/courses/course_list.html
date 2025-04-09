@@ -1,16 +1,18 @@
-{% extends 'students/base.html' %}  <!-- Reuse the base template from your students app, or create a global base -->
+<!-- courses/templates/courses/course_list.html -->
+{% extends 'students/base.html' %}
 
 {% block content %}
-  <h2>Available Courses</h2>
-  <ul>
+<h2>All Courses</h2>
+<div class="course-cards">
     {% for course in courses %}
-      <li>
-        <h3>{{ course.title }}</h3>
-        <p>{{ course.description }}</p>
-        <small>Created on: {{ course.created_at|date:"F j, Y" }}</small>
-      </li>
+        <div class="course-card">
+            <h4>{{ course.title }}</h4>
+            <p>{{ course.description|truncatewords:20 }}</p>
+            <p class="course-meta">Price: ${{ course.price }}</p>
+            <a href="{% url 'courses:course_detail' course.id %}" class="details-link">View Details</a>
+        </div>
     {% empty %}
-      <li>No courses available at the moment.</li>
+        <p>No courses available at the moment.</p>
     {% endfor %}
-  </ul>
+</div>
 {% endblock %}
