@@ -2,46 +2,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Learning Platform</title>
-    <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8">
+  <title>Learning Platform</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Header with fixed navigation bar -->
-    <header>
-        <div class="nav-container">
-            <h1 class="logo">Learning Platform</h1>
-            <nav>
-                <!-- Home always available -->
-                <a href="{% url 'home' %}">Home</a>
-                {% if user.is_authenticated %}
-                    <!-- Link to the Dashboard page -->
-                    <a href="{% url 'dashboard' %}">Dashboard</a>
-                    <!-- Link to the Courses page -->
-                    <a href="{% url 'courses:course_list' %}">Courses</a>
-                    <!-- Display user's username and logout form inline -->
-                    <span class="user-welcome">Welcome, {{ user.username }}</span>
-                    <form action="{% url 'logout' %}" method="post" class="logout-form">
-                        {% csrf_token %}
-                        <button type="submit">Logout</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'signup' %}">Sign Up</a>
-                {% endif %}
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main content area -->
-    <main>
-        {% block content %}
-        <!-- Specific page content will be injected here -->
-        {% endblock %}
-    </main>
-
-    <!-- Link to your JavaScript file -->
-    <script src="{% static 'js/script.js' %}"></script>
+  <!-- Header with fixed navigation bar -->
+  <header>
+    <div class="nav-container">
+      <h1 class="logo">Learning Platform</h1>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <!-- Note: Using the courses namespace for the courses list -->
+          <a href="{% url 'courses:course_list' %}">Courses</a>
+          <span class="user-welcome">Welcome, {{ user.username }}</span>
+          <form action="{% url 'logout' %}" method="post" class="logout-form">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
