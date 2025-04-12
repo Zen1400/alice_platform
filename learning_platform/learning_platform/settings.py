@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.students',
     'apps.courses',
     'storages',
+    'a_stripe',
 ]
 
 MIDDLEWARE = [
